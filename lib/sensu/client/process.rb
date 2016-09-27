@@ -152,6 +152,7 @@ module Sensu
               check[:duration] = ("%.3f" % (Time.now.to_f - started)).to_f
               check[:output] = output
               check[:status] = status
+              check[:hash] = Digest::MD5.hexdigest(output)
               publish_check_result(check)
               @checks_in_progress.delete(check[:name])
             end

@@ -535,7 +535,13 @@ module Sensu
               event[:last_ok] = stored_event[:last_ok]
               event[:occurrences] = stored_event[:occurrences]
               event[:occurrences_watermark] = stored_event[:occurrences_watermark] || event[:occurrences]
+              if check[:hash] == stored_event[:check][:hash]
+                event[:output_change] = false
+              else
+                event[:output_change] = true
+              end
             else
+              event[:output_change] = false
               event[:id] = random_uuid
               event[:last_ok] = event[:timestamp]
             end
